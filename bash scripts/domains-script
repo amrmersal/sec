@@ -1,0 +1,59 @@
+#!/bin/bash
+
+# Function to perform subdomain enumeration using sublist3r
+sublist3r_enum() {
+    domain=$1
+    sublist3r -d "$domain" -o temp_output.txt
+}
+
+# Function to perform subdomain enumeration using amass
+amass_enum() {
+    domain=$1
+    amass enum -d "$domain" -o temp_output.txt
+}
+
+# Function to perform subdomain enumeration for a given domain list
+enumerate_subdomains() {
+    input_file=$1
+    iterations=$2
+
+    # Initial enumeration
+    cat "$input_file" | while read -r domain; do
+        sublist3r_enum "$domain"
+        amass_enum "$domain"
+    done
+
+    # Perform additional iterations
+    for ((i=1; i<$iterations; i++)); do
+        cat temp_output.txt | while read -r domain; do
+            sublist3r_enum "$domain"
+            amass_enum "$domain"
+        done
+    done
+
+    # Save unique subdomains to the output file
+    sort -u temp_output.txt > subdomains_result.txt
+
+    # Count and display unique subdomains
+    total_subdomains=$(wc -l < subdomains_result.txt)
+    echo -e "\nTotal unique subdomains found: $total_subdomains"
+    echo "Results saved to subdomains_result.txt"
+
+    # Clean up temporary files
+    rm temp_output.txt
+}
+
+# Main script
+echo "Enter the path to the input file containing a list of domains:"
+read -r input_file
+
+if [ ! -f "$input_file" ]; then
+    echo "Error: Input file not found."
+    exit 1
+fi
+
+echo "Enter the number of iterations:"
+read -r iterations
+
+enumerate_subdomains "$input_file" "$iterations"
+
