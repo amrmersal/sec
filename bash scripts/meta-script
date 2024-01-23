@@ -1,0 +1,9 @@
+#!/bin/bash
+echo "enter file path"
+read path
+if [ -f "$path" ]
+then
+echo $(exiftool $path)
+else 
+echo $(exiftool -r -time:all -G0:1 -a -s -face $path)
+fi

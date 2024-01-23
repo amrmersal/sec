@@ -1,0 +1,12 @@
+#!/bin/bash
+iBackupDestination="/path/to/backup/directory"
+dateFormat="%Y%m%d%H%M%S"
+BackupFilename="home_backup_$(date +$date_format).tar.gz"
+homeDir="/home"
+mkdir -p "$BackupDestination"
+tar -czvf "$BackupDestination/$BackupFilename" "$homeDir"
+if [ $? -eq 0 ]; then
+echo "Backup successful: $BackupFilename"
+else
+echo "Backup failed."
+fi

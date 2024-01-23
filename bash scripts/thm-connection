@@ -1,0 +1,16 @@
+#!/bin/bash
+#warp connect
+warp-cli connect
+# Check if an IP has been assigned
+warp_ip=$(curl -s ifconfig.co)
+if [ -n "$warp_ip" ]; then
+    echo "Connected to Warp. Assigned IP: $warp_ip"
+else
+    echo "Failed to connect to Warp. Exiting..."
+    exit 1
+#openvpn connect
+sudo $(openvpn /home/amrmersal/Downloads/amrmersal.ovpn)
+#thm check
+ping 10.10.10.10 -c3
+#disconnect warp
+warp-cli disconnect
