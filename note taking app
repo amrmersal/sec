@@ -16,7 +16,7 @@
             <button onclick="login()">Login</button>
         </div>
         <div id="notesSection" style="display: none;">
-            <textarea id="noteInput" placeholder="Write your note here..."></textarea>
+            <textarea id="noteInput" placeholder="Write a note"></textarea>
             <br />
             <button onclick="saveNote()">Save Note</button>
             <br />
@@ -34,11 +34,11 @@
             // authentication
             if (email === 'email' && password === 'password') {
                 localStorage.setItem('loggedInUser', email);
-                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('loginForm').style.display = 'block';
                 document.getElementById('notesSection').style.display = 'block';
                 loadNotes();
             } else {
-                alert('wrong email or password');
+                alert('invalid email or password');
             }
         }
 
