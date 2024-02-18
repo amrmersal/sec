@@ -32,9 +32,9 @@
             let password = document.getElementById('password').value;
 
             // authentication
-            if (email === 'email' && password === 'password') {
+            if (email === 'amr' && password === '1234') {
                 localStorage.setItem('loggedInUser', email);
-                document.getElementById('loginForm').style.display = 'block';
+                document.getElementById('loginForm').style.display = 'none';
                 document.getElementById('notesSection').style.display = 'block';
                 loadNotes();
             } else {
