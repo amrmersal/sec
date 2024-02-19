@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Note Taking App</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Note Taking App</h1>
+        <div id="loginForm">
+            <input type="text" id="email" placeholder="Email">
+            <br />
+            <input type="password" id="password" placeholder="Password">
+            <br />
+            <button onclick="login()">Login</button>
+        </div>
+        <div id="notesSection" style="display: none;">
+            <textarea id="noteInput" placeholder="Write your note here..."></textarea>
+            <br />
+            <button onclick="saveNote()">Save Note</button>
+            <br />
+            <button onclick="logout()">Logout</button>
+            <br />
+            <ul id="notesList"></ul>
+        </div>
+    </div>
+    <script>
+        // Login
+        function login() {
+            let email = document.getElementById('email').value;
+            let password = document.getElementById('password').value;
+
+            // authentication
+            if (email === 'amr' && password === '1234') {
+                localStorage.setItem('loggedInUser', email);
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('notesSection').style.display = 'block';
+                loadNotes();
+            } else {
+                alert('invalid email or password');
+            }
+        }
+
+        // Logout
+        function logout() {
+            localStorage.removeItem('loggedInUser');
+            location.reload();
+        }
+
+        // Saving note
+        function saveNote() {
+            const noteInput = document.getElementById('noteInput').value;
+            let notes = JSON.parse(localStorage.getItem('notes')) || [];
+            notes.push(noteInput);
+            localStorage.setItem('notes', JSON.stringify(notes));
+            loadNotes();
+            document.getElementById('noteInput').value = '';
+        }
+
+
+        // Loading notes
+        function loadNotes() {
+            const notes = JSON.parse(localStorage.getItem('notes')) || [];
+            const notesList = document.getElementById('notesList');
+            notesList.innerHTML = '';
+            notes.forEach(function (note) {
+                const li = document.createElement('li');
+                li.textContent = note;
+                notesList.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>
