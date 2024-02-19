@@ -1,2 +1,0 @@
-D:\sec\NotesApp\obj\Debug\notesapp.esproj.SuggestedBindingRedirects.cache
-D:\sec\NotesApp\obj\Debug\notesapp.esproj.CoreCompileInputs.cache
